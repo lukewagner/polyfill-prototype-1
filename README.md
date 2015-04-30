@@ -1,8 +1,8 @@
-# WebAssembly polyfill library and tools
+# WebAssembly polyfill library
 
 *This library parses a prototype binary format that is roughly similar to what
-WebAssembly may end up being standardized to look like; thus it is currently
-just a prototype to demonstrate that a WebAssembly polyfill can not only be
+WebAssembly may end up looking like. Even before we have a concrete WebAssembly
+format, this prototype demonstrate that a WebAssembly polyfill can not only be
 effective, but provide value to users even before there is any native support
 (due to smaller download size).*
 
