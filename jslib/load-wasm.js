@@ -1,7 +1,7 @@
 // This file implements a browser utility function to asychronously fetch,
 // decode and compile a given WebAssembly module. The caller passes in the url
 // of the .wasm file and the returned promise resolves to a compiled (but
-// unliked) module.
+// unlinked) module.
 
 var loadWebAssembly = (function() {
   var globalNameCounter = 0;
