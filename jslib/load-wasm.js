@@ -1,7 +1,7 @@
 // This file implements a browser utility function to asychronously fetch,
-// decode and compile a given wasm url.js code. The caller passes in the url of
-// the wasm file and the returned promise resolves to the compiled (but unliked)
-// asm.js module.
+// decode and compile a given WebAssembly module. The caller passes in the url
+// of the .wasm file and the returned promise resolves to a compiled (but
+// unliked) module.
 
 var loadWebAssembly = (function() {
   var globalNameCounter = 0;
@@ -12,9 +12,9 @@ var loadWebAssembly = (function() {
       var callbackName = "";
       do {
         callbackName = "onFinishLoadWebAssembly_" + globalNameCounter++;
-      } while (Object.hasOwnProperty(window, this));
-      this[callbackName] = function(asmModule) {
-        delete this[callbackName];
+      } while (Object.hasOwnProperty(window, callbackName));
+      window[callbackName] = function(asmModule) {
+        delete window[callbackName];
         resolve(asmModule);
       }
 
