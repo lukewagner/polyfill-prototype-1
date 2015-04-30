@@ -1,0 +1,18 @@
+[
+  "toplevel",
+  [
+    [
+      "call",
+      [
+        "name",
+        "print"
+      ],
+      [
+        [
+          "string",
+          "hello world"
+        ]
+      ]
+    ]
+  ]
+]

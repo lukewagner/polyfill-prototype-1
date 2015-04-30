@@ -1,0 +1,61 @@
+function asmModule($a,$b,$c){'use asm';
+var a=new $a.Int8Array($c);
+var b=new $a.Uint8Array($c);
+var c=new $a.Int16Array($c);
+var d=new $a.Uint16Array($c);
+var e=new $a.Int32Array($c);
+var f=new $a.Uint32Array($c);
+var g=new $a.Float32Array($c);
+var h=new $a.Float64Array($c);
+var i=$a.Math.imul;
+var j=$a.Math.fround;
+var $d=$a.Math.acos;
+var $e=$a.Math.asin;
+var $f=$a.Math.atan;
+var $g=$a.Math.cos;
+var $h=$a.Math.sin;
+var $i=$a.Math.tan;
+var $j=$a.Math.exp;
+var $k=$a.Math.log;
+var $l=$a.Math.ceil;
+var $m=$a.Math.floor;
+var $n=$a.Math.sqrt;
+var $o=$a.Math.abs;
+var $p=$a.Math.min;
+var $q=$a.Math.max;
+var $r=$a.Math.atan2;
+var $s=$a.Math.pow;
+var $t=$a.Math.clz32;
+var $u=$b.wee;
+var $v=$b.aboo;
+var $w=0;
+var $x=0;
+var $y=j(0);
+var $z=0.;
+var $A=0.;
+var $B=$b.foo|0;
+var $C=$b.bar|0;
+var $D=j($b.foopy);
+var $E=+$b.baz;
+var $F=+$b.quux;
+function $G(){
+$B=1;
+$C=$B+2|0;
+$E=1.;
+$y=j(1);
+$z=$E+2.;
+$D=j($y+j(2.2));
+$w=1+$x+$B+$C|0;
+$E=1.1+$A+$E+$F;
+$u($w|0,$x|0)|0;
+$v($x|0,$z);
++$u($B|0,$A);
+$u();
++$H();
+$G();
+}
+function $H(){
+return 1.;
+}
+return $G;
+}
