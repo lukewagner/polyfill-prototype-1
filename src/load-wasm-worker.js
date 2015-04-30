@@ -1,9 +1,12 @@
 
-// load-wasm-worker.js: this file is concatenated at the end of the Emscripten-compiled unpack.cpp.
+// src/load-wasm-worker.js: this file is concatenated at the end of the
+// Emscripten-compiled unpack.cpp into jslib/load-wasm-worker.js.
 
-// This file implements a worker that responds to a single initial message containing a url to
-// fetch and unpack and the name of the callback to pass into decoding. The worker responds by
-// sending a Blob containing the decoded utf8 chars.
+// This file implements a worker that responds to a single initial message
+// containing a url to fetch and unpack and the name of the global callback
+// function to pass the resulting asm.js module when the decoded script is
+// executed. The worker responds by sending a Blob containing the decoded utf8
+// chars.
 
 function mallocArrayCopy(src) {
   var L = src.byteLength;
