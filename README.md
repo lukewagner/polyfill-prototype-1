@@ -24,6 +24,9 @@ following the steps:
 
 Demos:
  * [Unity AngryBots](http://lukewagner.github.io/AngryBotsPacked)
+   * AngryBots-asm.js goes from 19mb to 6.3mb.
+   * AngryBots-asm.js.gz goes from 4.1mb to 3.0mb.
+   * Decode time: 240ms on 2.4Ghz Xeon
  * TODO: Epic TappyChicken
 
 TODO:
