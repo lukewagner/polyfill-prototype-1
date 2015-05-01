@@ -854,10 +854,12 @@ struct FuncPtrTable
 
 struct Global
 {
-  Global(Type type, uint32_t index) : type(type), index(index) {}
+  Global(Type type, uint32_t index, bool is_stdlib) : type(type), index(index),
+                                                      is_stdlib(is_stdlib) {}
 
   Type type;
   uint32_t index;
+  bool is_stdlib;
 };
 
 struct Export
@@ -962,33 +964,41 @@ public:
     heap_views_.emplace(name, v);
   }
 
+  struct GlobalImportInfo {
+    IString local, imported;
+    bool is_stdlib;
+    GlobalImportInfo(IString local, IString imported, bool is_stdlib) : local(local),
+                                                                        imported(imported),
+                                                                        is_stdlib(is_stdlib) {}
+  };
+
   void set_globals(const vector<IString>& i32_zero,
                    const vector<IString>& f32_zero,
                    const vector<IString>& f64_zero,
-                   const vector<pair<IString,IString>>& i32_import,
-                   const vector<pair<IString,IString>>& f32_import,
-                   const vector<pair<IString,IString>>& f64_import)
+                   const vector<GlobalImportInfo>& i32_import,
+                   const vector<GlobalImportInfo>& f32_import,
+                   const vector<GlobalImportInfo>& f64_import)
   {
     num_global_i32_zero_ = i32_zero.size();
     num_global_f32_zero_ = f32_zero.size();
     num_global_f64_zero_ = f64_zero.size();
     for (auto name : i32_zero)
-      globals_.emplace(name, Global(Type::I32, globals_.size()));
+      globals_.emplace(name, Global(Type::I32, globals_.size(), false));
     for (auto name : f32_zero)
-      globals_.emplace(name, Global(Type::F32, globals_.size()));
+      globals_.emplace(name, Global(Type::F32, globals_.size(), false));
     for (auto name : f64_zero)
-      globals_.emplace(name, Global(Type::F64, globals_.size()));
+      globals_.emplace(name, Global(Type::F64, globals_.size(), false));
     for (auto pair : i32_import) {
-      globals_.emplace(pair.first, Global(Type::I32, globals_.size()));
-      global_i32_imports_.push_back(pair.second);
+      globals_.emplace(pair.local, Global(Type::I32, globals_.size(), pair.is_stdlib));
+      global_i32_imports_.push_back(pair.imported);
     }
     for (auto pair : f32_import) {
-      globals_.emplace(pair.first, Global(Type::F32, globals_.size()));
-      global_f32_imports_.push_back(pair.second);
+      globals_.emplace(pair.local, Global(Type::F32, globals_.size(), pair.is_stdlib));
+      global_f32_imports_.push_back(pair.imported);
     }
     for (auto pair : f64_import) {
-      globals_.emplace(pair.first, Global(Type::F64, globals_.size()));
-      global_f64_imports_.push_back(pair.second);
+      globals_.emplace(pair.local, Global(Type::F64, globals_.size(), pair.is_stdlib));
+      global_f64_imports_.push_back(pair.imported);
     }
   }
 
@@ -1304,7 +1314,7 @@ analyze_heap_ctor(Module& m, const VarNameNode& var)
     abort();
 }
 
-void
+bool
 analyze_import(Module& m, IString name, DotNode& dot)
 {
   if (dot.base.is<DotNode>()) {
@@ -1351,9 +1361,12 @@ analyze_import(Module& m, IString name, DotNode& dot)
     else
       unreachable<void>();
   } else {
-    assert(dot.base.as<NameNode>().str == m.foreign());
-    m.add_func_import(name, dot.name);
+    if (dot.base.as<NameNode>().str == m.foreign())
+      m.add_func_import(name, dot.name);
+    else
+      return false; // an stdlib global
   }
+  return true;
 }
 
 AstNode*
@@ -1362,9 +1375,9 @@ analyze_global_definitions(Module& m, AstNode* stmt)
   vector<IString> i32_zero;
   vector<IString> f32_zero;
   vector<IString> f64_zero;
-  vector<pair<IString,IString>> i32_import;
-  vector<pair<IString,IString>> f32_import;
-  vector<pair<IString,IString>> f64_import;
+  vector<Module::GlobalImportInfo> i32_import;
+  vector<Module::GlobalImportInfo> f32_import;
+  vector<Module::GlobalImportInfo> f64_import;
 
   for (; stmt && stmt->is<VarNode>(); stmt = stmt->next) {
     for (VarNameNode* var = stmt->as<VarNode>().first; var; var = var->next) {
@@ -1389,13 +1402,22 @@ analyze_global_definitions(Module& m, AstNode* stmt)
           case AstNode::New:
             analyze_heap_ctor(m, *var);
             break;
-          case AstNode::Dot:
-            analyze_import(m, var->name, var->init.as<DotNode>());
+          case AstNode::Dot: {
+            auto& dot = var->init.as<DotNode>();
+            if (!analyze_import(m, var->name, dot)) {
+              // not a function, so must be an stdlib global
+              assert(dot.base.as<NameNode>().str == m.stdlib());
+              if (dot.name.equals("NaN") || dot.name.equals("Infinity"))
+                f64_import.emplace_back(var->name, dot.name, true);
+              else
+                unreachable<void>();
+            }
             break;
+          }
           case AstNode::Prefix: {
             auto& dot = var->init.as<PrefixNode>().kid.as<DotNode>();
             assert(dot.base.as<NameNode>().str == m.foreign());
-            f64_import.emplace_back(var->name, dot.name);
+            f64_import.emplace_back(var->name, dot.name, false);
             break;
           }
           case AstNode::Binary: {
@@ -1404,7 +1426,7 @@ analyze_global_definitions(Module& m, AstNode* stmt)
             assert(binary.rhs.as<IntNode>().u32 == 0);
             auto& dot = binary.lhs.as<DotNode>();
             assert(dot.base.as<NameNode>().str == m.foreign());
-            i32_import.emplace_back(var->name, dot.name);
+            i32_import.emplace_back(var->name, dot.name, false);
             break;
           }
           case AstNode::Call: {
@@ -1413,7 +1435,7 @@ analyze_global_definitions(Module& m, AstNode* stmt)
             assert(call.compute_length() == 1);
             auto& dot = call.first->as<DotNode>();
             assert(dot.base.as<NameNode>().str == m.foreign());
-            f32_import.emplace_back(var->name, dot.name);
+            f32_import.emplace_back(var->name, dot.name, false);
             break;
           }
           default:
