@@ -26,36 +26,38 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-var $u=$b.wee;
-var $v=$b.aboo;
-var $w=0;
-var $x=0;
-var $y=j(0);
-var $z=0.;
-var $A=0.;
-var $B=$b.foo|0;
-var $C=$b.bar|0;
-var $D=j($b.foopy);
-var $E=+$b.baz;
-var $F=+$b.quux;
-function $G(){
-$B=1;
-$C=$B+2|0;
-$E=1.;
-$y=j(1);
-$z=$E+2.;
-$D=j($y+j(2.2));
-$w=1+$x+$B+$C|0;
-$E=1.1+$A+$E+$F;
-$u($w|0,$x|0)|0;
-$v($x|0,$z);
-+$u($B|0,$A);
-$u();
-+$H();
-$G();
+var $u=$a.NaN;
+var $v=$a.Infinity;
+var $w=$b.wee;
+var $x=$b.aboo;
+var $y=0;
+var $z=0;
+var $A=j(0);
+var $B=0.;
+var $C=0.;
+var $D=$b.foo|0;
+var $E=$b.bar|0;
+var $F=j($b.foopy);
+var $G=+$b.baz;
+var $H=+$b.quux;
+function $I(){
+$D=1;
+$E=$D+2|0;
+$G=1.;
+$A=j(1);
+$B=$G+2.;
+$F=j($A+j(2.2));
+$y=1+$z+$D+$E|0;
+$G=1.1+$C+$G+$H;
+$w($y|0,$z|0)|0;
+$x($z|0,$B);
++$w($D|0,$C);
+$w();
++$J();
+$I();
 }
-function $H(){
+function $J(){
 return 1.;
 }
-return $G;
+return $I;
 }

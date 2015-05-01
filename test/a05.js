@@ -26,7 +26,9 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-function $u(){
+var $u=$a.NaN;
+var $v=$a.Infinity;
+function $w(){
 var k=j(0),l=0.;
 l=0.;
 l=1.;
@@ -45,5 +47,5 @@ k=j(1e+09);
 k=j(0.001);
 k=j(0.00123456);
 }
-return $u;
+return $w;
 }

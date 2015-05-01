@@ -3,8 +3,8 @@
 #ifndef shared_h_
 #define shared_h_
 
-#include <stdint.h>
-#include <assert.h>
+#include <cstdint>
+#include <cassert>
 #include <vector>
 
 namespace asmjs {

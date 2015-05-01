@@ -26,39 +26,41 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-function $u(){
+var $u=$a.NaN;
+var $v=$a.Infinity;
+function $w(){
 var k=0.;
-k=+$v();
-k=+$v()+4.;
-k=4.+ +$v();
-$w();
+k=+$x();
+k=+$x()+4.;
+k=4.+ +$x();
+$y();
 return 1;
 }
-function $v(){
+function $x(){
 var k=0;
-k=$u()|0;
-k=($u()|0)+4|0;
-k=($w(),1);
+k=$w()|0;
+k=($w()|0)+4|0;
+k=($y(),1);
 return 1.2;
 }
-function $w(){
+function $y(){
 var k=0,l=j(0);
-+$x(1);
-+$x($y(k+1|0,+$x(1)+1.)|0);
++$z(1);
++$z($A(k+1|0,+$z(1)+1.)|0);
 }
-function $x(k){
+function $z(k){
 k=k|0;
-return +$v();
+return +$x();
 }
-function $y(k,l){
+function $A(k,l){
 k=k|0;l=+l;
 return k|0;
 }
-function $z(k){
+function $B(k){
 k=j(k);
-j($z(k));
-j($z(j($z(k))));
+j($B(k));
+j($B(j($B(k))));
 return k;
 }
-return $u;
+return $w;
 }

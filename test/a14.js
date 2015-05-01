@@ -26,47 +26,49 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-var $u=$b.one;
-var $v=$b.two;
-var $w=$b.three;
-function $x(){
+var $u=$a.NaN;
+var $v=$a.Infinity;
+var $w=$b.one;
+var $x=$b.two;
+var $y=$b.three;
+function $z(){
 }
-function $y(k){
+function $A(k){
 k=k|0;
 return 1.;
 }
-function $z(k,l){
+function $B(k,l){
 k=k|0;l=+l;
-$F[k&3]();
-l=(+$G[k&0](k),l+ +$G[k&0](k),l-+$G[k&0](k));
-k=($H[k&1](k,l)|0,k+($H[k&1](k,l)|0)|0);
-$F[k+1&3]();
-$F[(k|1)&3]();
-$F[($H[k&1](k,l)|0)&3]();
-$F[a[k>>0]&3]();
+$H[k&3]();
+l=(+$I[k&0](k),l+ +$I[k&0](k),l-+$I[k&0](k));
+k=($J[k&1](k,l)|0,k+($J[k&1](k,l)|0)|0);
+$H[k+1&3]();
+$H[(k|1)&3]();
+$H[($J[k&1](k,l)|0)&3]();
+$H[a[k>>0]&3]();
 return 1;
 }
-function $A(){
+function $C(){
 }
-function $B(k,l){
+function $D(k,l){
 k=k|0;l=+l;
 return 2;
 }
-function $C(){
+function $E(){
 return 1.;
 }
-function $D(k){
+function $F(k){
 k=j(k);
-j($I[0&3](k));
+j($K[0&3](k));
 return j(1.1);
 }
-function $E(k){
+function $G(k){
 k=j(k);
 return j(2);
 }
-var $F=[$x,$A,$x,$x];
-var $G=[$y];
-var $H=[$z,$B];
-var $I=[$D,$E,$D,$E];
-return $x;
+var $H=[$z,$C,$z,$z];
+var $I=[$A];
+var $J=[$B,$D];
+var $K=[$F,$G,$F,$G];
+return $z;
 }

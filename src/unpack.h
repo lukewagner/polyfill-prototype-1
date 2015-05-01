@@ -1,7 +1,7 @@
 #ifndef unpack_h_
 #define unpack_h_
 
-#include <stdint.h>
+#include <cstdint>
 #include <vector>
 
 namespace asmjs {

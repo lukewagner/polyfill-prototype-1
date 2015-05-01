@@ -600,6 +600,7 @@ class NumLit
 public:
   static bool is(Module& m, const AstNode& n);
   explicit NumLit(Module& m, const AstNode& n);
+  explicit NumLit(double f64) : asmjs_type_(AsmJSType::Double) { u.f64_ = f64; }
 
   AsmJSType asmjs_type() const { return asmjs_type_; }
   Type type() const { return asmjs_type_.type(); }
@@ -911,6 +912,7 @@ class Module
   vector<IString> global_f32_imports_;
   vector<IString> global_f64_imports_;
 
+  unordered_map<IString, double> stdlib_doubles_;
   unordered_map<IString, StdLibFunc> stdlib_funcs_;
   unordered_map<IString, HeapView> heap_views_;
   vector<Export> exports_;
@@ -922,6 +924,7 @@ class Module
     assert(func_to_index_.find(i) == func_to_index_.end());
     assert(func_import_to_index_.find(i) == func_import_to_index_.end());
     assert(func_ptr_table_to_index_.find(i) == func_ptr_table_to_index_.end());
+    assert(stdlib_doubles_.find(i) == stdlib_doubles_.end());
     assert(stdlib_funcs_.find(i) == stdlib_funcs_.end());
     assert(heap_views_.find(i) == heap_views_.end());
   }
@@ -1032,6 +1035,16 @@ public:
   {
     return func_import_to_index_.find(name) != func_import_to_index_.end();
   }
+
+  void add_stdlib_double(IString name, double d)
+  {
+    assert(!finished_analysis_);
+    assert_unique_global_name(name);
+    stdlib_doubles_.emplace(name, d);
+  }
+
+  bool is_stdlib_double(IString name) { return stdlib_doubles_.find(name) != stdlib_doubles_.end(); }
+  double stdlib_double(IString name) { return stdlib_doubles_.find(name)->second; }
 
   template <class CodeT>
   void add_stdlib_func(IString name, CodeT code)
@@ -1350,9 +1363,17 @@ analyze_import(Module& m, IString name, DotNode& dot)
       m.add_stdlib_func(name, F64::Pow);
     else
       unreachable<void>();
-  } else {
-    assert(dot.base.as<NameNode>().str == m.foreign());
+  } else if (dot.base.as<NameNode>().str == m.stdlib()) {
+    if (dot.name.equals("NaN"))
+      m.add_stdlib_double(name, NAN);
+    else if (dot.name.equals("Infinity"))
+      m.add_stdlib_double(name, INFINITY);
+    else
+      unreachable<void>();
+  } else if (dot.base.as<NameNode>().str == m.foreign()) {
     m.add_func_import(name, dot.name);
+  } else {
+    unreachable<void>();
   }
 }
 
@@ -1757,6 +1778,9 @@ analyze_name(Module& m, Function& f, NameNode& name)
     }
     return unreachable<AsmJSType>();
   }
+
+  if (m.is_stdlib_double(name.str))
+    return analyze_num_lit(m, NumLit(m.stdlib_double(name.str)));
 
   Global g = m.global(name.str);
   name.index = g.index;
@@ -2534,6 +2558,8 @@ write_name(Module& m, Function& f, const NameNode& name)
 {
   if (!name.expr_with_imm.is_bad() && name.index < ImmLimit) {
     m.write().code(name.expr_with_imm, name.index);
+  } else if (name.expr.is_bad()) {
+    write_num_lit(m, f, NumLit(m.stdlib_double(name.str)));
   } else {
     m.write().code(name.expr);
     m.write().imm_u32(name.index);

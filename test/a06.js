@@ -26,7 +26,9 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-function $u(k,l){
+var $u=$a.NaN;
+var $v=$a.Infinity;
+function $w(k,l){
 k=k|0;l=+l;
 var m=0,n=j(0),o=0.;
 k=1+2+3|0;
@@ -157,5 +159,5 @@ k=- -1|0;
 l=-+1;
 o=+j(n*n);
 }
-return $u;
+return $w;
 }

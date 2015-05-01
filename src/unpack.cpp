@@ -5,9 +5,10 @@
 #include "shared.h"
 
 #include <algorithm>
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+#include <cmath>
 
 #ifdef EMSCRIPTEN
 # include <emscripten.h>
@@ -69,6 +70,8 @@ enum class StdLib : unsigned
   atan2,
   pow,
   clz32,
+  NaN,
+  Infinity,
   Count
 };
 
@@ -257,6 +260,12 @@ public:
 
   void float64(double d)
   {
+    if (std::isnan(d))
+        return name(StdLib::NaN);
+
+    if (std::isinf(d))
+        return name(StdLib::Infinity);
+
     if (d < 0) {
       ascii('-');
       d = -d;
@@ -2334,6 +2343,8 @@ unpack(State& s, const char* cb_name)
   import_stdlib(s, StdLib::atan2, "Math.atan2");
   import_stdlib(s, StdLib::pow, "Math.pow");
   import_stdlib(s, StdLib::clz32, "Math.clz32");
+  import_stdlib(s, StdLib::NaN, "NaN");
+  import_stdlib(s, StdLib::Infinity, "Infinity");
 
   constant_pool_section(s);
   signature_section(s);

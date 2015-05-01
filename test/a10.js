@@ -26,7 +26,9 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-function $u(){
+var $u=$a.NaN;
+var $v=$a.Infinity;
+function $w(){
 var k=0;
 switch(0){
 case 0:
@@ -81,5 +83,5 @@ k=2;
 k=3;
 }
 }
-return $u;
+return $w;
 }

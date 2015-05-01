@@ -26,20 +26,22 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-var $u=$b.one;
-var $v=$b.two;
-var $w=$b.three;
-function $x(k,l){
+var $u=$a.NaN;
+var $v=$a.Infinity;
+var $w=$b.one;
+var $x=$b.two;
+var $y=$b.three;
+function $z(k,l){
 k=k|0;l=+l;
-$u();
-+$u(k|0);
-$u(l)|0;
-$v();
-k=($w(),+$w(1),$w(1,2,3),$w()|0);
+$w();
++$w(k|0);
+$w(l)|0;
+$x();
+k=($y(),+$y(1),$y(1,2,3),$y()|0);
 }
-function $y(){
+function $A(){
 }
-function $z(){
+function $B(){
 }
-return $x;
+return $z;
 }

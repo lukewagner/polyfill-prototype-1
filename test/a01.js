@@ -26,12 +26,14 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-function $u(k,l,m){
+var $u=$a.NaN;
+var $v=$a.Infinity;
+function $w(k,l,m){
 k=k|0;l=+l;m=j(m);
 }
-function $v(){
+function $x(){
 }
-function $w(){
+function $y(){
 }
-return {one:$u,two:$v};
+return {one:$w,two:$x};
 }

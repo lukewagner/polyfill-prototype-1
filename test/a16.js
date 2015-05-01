@@ -29,26 +29,11 @@ var $t=$a.Math.clz32;
 var $u=$a.NaN;
 var $v=$a.Infinity;
 function $w(){
-var k=0;
-while(1){
+var k=0.;
+k=$u;
+k=$v;
+k=$u+1.1;
+k=$u+$v;
 }
-while(1){
-k=2;
-}
-while(1)k=1;
-while(1)while(1){
-}
-while(1)while(1){
-k=2;
-}
-while(1)while(1)k=1;
-do{
-}
-while(1);
-do{
-k=2;
-}
-while(1);
-}
-return $w;
+return {one:$w};
 }

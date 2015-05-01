@@ -26,7 +26,9 @@ var $q=$a.Math.max;
 var $r=$a.Math.atan2;
 var $s=$a.Math.pow;
 var $t=$a.Math.clz32;
-function $u(k){
+var $u=$a.NaN;
+var $v=$a.Infinity;
+function $w(k){
 k=k|0;
 var l=j(0),m=0.;
 k=(a[0]|0,2+(a[0]|0)|0,a[k>>0]|0,-4-(a[0]|0)|0,a[0]=1,3+(a[0]=1)|0,a[k>>0]=1,4+(a[k>>0]=1)|0);
@@ -60,8 +62,8 @@ m=$l(+g[0]);
 m=$m(+g[0]);
 m=$n(+g[0]);
 m=$o(+g[0]);
-a[0]=(k,($v()|0)+1|0);
-k=4+(a[0]=(k,($v()|0)+1|0))|0;
+a[0]=(k,($x()|0)+1|0);
+k=4+(a[0]=(k,($x()|0)+1|0))|0;
 a[0]=k+1;
 c[0]=k+1;
 e[0]=k+1;
@@ -82,8 +84,8 @@ e[100000000>>2]=5;
 g[100000000>>2]=j(6);
 h[100000000>>3]=7.;
 }
-function $v(){
+function $x(){
 return 1;
 }
-return $u;
+return $w;
 }
