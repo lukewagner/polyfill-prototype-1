@@ -1,10 +1,8 @@
 # WebAssembly polyfill library
 
-*This library parses a prototype binary format that is roughly similar to what
-WebAssembly may end up looking like. Even before we have a concrete WebAssembly
-format, this prototype demonstrate that a WebAssembly polyfill can not only be
-effective, but provide value to users even before there is any native support
-(due to smaller download size).*
+*This repo currently contains a prototype designed to demonstrate the real-world efficacy of a WebAssembly polyfill.  Standardization work is ongoing in the [spec repo](https://github.com/WebAssembly/spec/blob/master/BinaryEncoding.md) to design a real binary format and will be tracked by this repo. The current prototype also makes no attempt to call native browser decoding and will remain a plain JS library until there is a standardized, stable, WebAssembly v.1.*
+
+## Usage instructions for current prototype
 
 The library in jslib/ should be ready to use, just copy both files and call loadWebAssembly().
 
