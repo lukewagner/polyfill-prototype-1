@@ -1,6 +1,6 @@
-# WebAssembly polyfill library
+# WebAssembly Polyfill (experimental)
 
-*This repo currently contains a prototype designed to demonstrate the real-world efficacy of a WebAssembly polyfill.  Standardization work is ongoing in the [spec repo](https://github.com/WebAssembly/spec/blob/master/BinaryEncoding.md) to design a real binary format and will be tracked by this repo. The current prototype also makes no attempt to call native browser decoding and will remain a plain JS library until there is a standardized, stable, WebAssembly v.1.*
+**This repo currently contains a prototype designed to demonstrate the real-world efficacy of a WebAssembly polyfill.  Standardization work is ongoing in the [spec repo](https://github.com/WebAssembly/spec/blob/master/BinaryEncoding.md) to design a real binary format and will be tracked by this repo. The current prototype also makes no attempt to call native browser decoding and will remain a plain JS library until there is a standardized, stable, WebAssembly v.1.**
 
 ## Usage instructions for current prototype
 
