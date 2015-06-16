@@ -56,5 +56,4 @@ polyfill (perform direct size/load-time comparisons) by following the steps:
 
  * Decode while downloading (using HTTP `Range` requests or splitting into separate files)
  * Perform generic compression on top of the `.wasm` file (e.g., 
-   [lzham](https://github.com/richgel999/lzham_codec) gives a further 30% boost).
- * Real build system
+   [lzham](https://github.com/richgel999/lzham_codec) gives a further 24% boost over `gzip`).
