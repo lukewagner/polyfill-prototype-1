@@ -1,6 +1,6 @@
-# WebAssembly Polyfill (experimental)
+# WebAssembly Polyfill (prototype)
 
-**This repo contains a proof-of-concept built to demonstrate the
+**This repo contains a prototype built to demonstrate the
 viability of a WebAssembly polyfill. Work is ongoing in other repos to design
 the actual standard binary format. This prototype also makes no attempt to call
 native browser decoding and so it is not, technically, a polyfill but rather a
@@ -29,7 +29,7 @@ garbage.
 3. The asm.js code decodes the binary into asm.js in the form of UTF8 bytes in a separate region of the asm.js heap.
 4. The worker glue code creates a `Blob` (a read-only copy) from a view of just the asm.js UTF8 bytes.
 5. The `Blob` is `postMessage()`ed back to the main thread (a non-copying
-   operation) where it is loaded as a script element with `script.src= URL.getObjectURL(blob)`.
+   operation) where it is loaded as a script element with `script.src = URL.getObjectURL(blob)`.
 6. When the asm.js script is executed, it passes the asm.js module function
    object to a callback which resolves the promise in step 1.
 
@@ -37,11 +37,11 @@ garbage.
 
 The library in `jslib/` should be ready to use, just copy both files and call `loadWebAssembly()`.
 
-Running 'make' compiles the C++ implementation into the JS files in `jslib/` and
+Running `make` compiles the C++ implementation into the JS files in `jslib/` and
 into native executables in `tools/`. (The Makefile is currently super-unportable.
 Sorry! Patches welcome.)
 
-## How to pack an asm.js file into a WebAssembly file
+## Packing asm.js into the binary format
 
 The polyfill also comes with a tool (`tools/pack-asmjs`) that compiles a single JS
 file (containing only asm.js) into the (experimental) WebAssembly format decoded by
