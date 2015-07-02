@@ -1,5 +1,4 @@
-cashew
-======
+#cashew
 
 Cashew is an asm.js parser written in C++.
 
@@ -14,8 +13,7 @@ Cashew is an asm.js parser written in C++.
 The main use case for Cashew is to quickly parse known-valid asm.js,
 in order to then process it.
 
-usage
------
+##usage
 
 `istring.h` and `cpp` implement an always-interned string class. This
 makes parsing much more efficient.
@@ -29,4 +27,22 @@ a builder, see ValueBuilder in the header.
 
 `test.cpp` is a simple example of using Cashew and the simple AST. It
 is used by `test.py`, which runs the test suite.
+
+##Building
+
+Uses cmake.
+
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
+##Testing
+
+```
+cd build
+../test.py
+```
 
