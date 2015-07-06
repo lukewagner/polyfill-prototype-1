@@ -246,15 +246,9 @@ public:
 
   void float32(double f)
   {
-    static const unsigned N = 100;
-    char buf[N];
-    uint32_t len = snprintf(buf, N, "%g", (double)f);
-
     name(HotStdLib::FRound);
     ascii('(');
-    check_write(len);
-    memcpy(cur_, buf, len);
-    cur_ += len;
+    float64((double)f);
     ascii(')');
   }
 
@@ -273,7 +267,14 @@ public:
 
     static const unsigned N = 100;
     char buf[N];
+
+#if __EMSCRIPTEN__
+    int len = emscripten_print_double(d, buf);
+    assert(len < N-1);
+    buf[len] = 0;
+#else
     uint32_t len = snprintf(buf, N, "%g", d);
+#endif
 
     check_write(len);
     memcpy(cur_, buf, len);
