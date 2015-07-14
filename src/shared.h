@@ -302,8 +302,25 @@ to_rtype(Type t)
   return RType(t);
 }
 
+
+// HACK: Workaround for unconstrained unions (C++11) support unavailable in MSVC++
+// We have a union that used to contain an Expr, but this is invalid pre-C++11 since
+//  Expr has constructors.
+class Expr;
+
+struct ExprPOD 
+{
+  RType type_;
+  uint8_t raw_code_;
+
+  operator Expr () const;
+};
+
+
 class Expr
 {
+  friend struct ExprPOD;
+
   RType type_;
   union U {
     I32 i32_;
@@ -332,6 +349,20 @@ public:
 
   bool operator==(Expr rhs) const { return type_ == rhs.type_ && u.raw_ == rhs.u.raw_; }
   bool operator!=(Expr rhs) const { return !(*this == rhs); }
+
+  operator ExprPOD () const {
+    ExprPOD result;
+    result.type_ = type_;
+    result.raw_code_ = u.raw_;
+    return result;
+  }
+};
+
+inline ExprPOD::operator Expr () const {
+  Expr result;
+  result.type_ = type_;
+  result.u.raw_ = raw_code_;
+  return result;
 };
 
 static const uint8_t HasImmFlag = 0x80;

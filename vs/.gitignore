@@ -1,0 +1,7 @@
+Debug
+Release
+*.suo
+*.sdf
+*.opensdf
+*.user
+*.filters

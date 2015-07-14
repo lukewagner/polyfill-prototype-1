@@ -14,6 +14,10 @@
 # include <emscripten.h>
 #endif
 
+#ifdef _MSC_VER
+  #define snprintf _snprintf
+#endif
+
 using namespace std;
 
 // TODO:
