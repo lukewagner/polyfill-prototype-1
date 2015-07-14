@@ -302,8 +302,22 @@ to_rtype(Type t)
   return RType(t);
 }
 
+// HACK: Discriminated union workaround
+class Expr;
+
+struct RawExpr {
+  friend class Expr;
+
+  RType type_;
+  uint8_t raw_code_;
+
+  operator Expr () const;
+};
+
 class Expr
 {
+  friend struct RawExpr;
+
   RType type_;
   union U {
     I32 i32_;
@@ -332,6 +346,20 @@ public:
 
   bool operator==(Expr rhs) const { return type_ == rhs.type_ && u.raw_ == rhs.u.raw_; }
   bool operator!=(Expr rhs) const { return !(*this == rhs); }
+
+  operator RawExpr () const {
+    RawExpr result;
+    result.type_ = type_;
+    result.raw_code_ = u.raw_;
+    return result;
+  }
+};
+
+inline RawExpr::operator Expr () const {
+  Expr result;
+  result.type_ = type_;
+  result.u.raw_ = raw_code_;
+  return result;
 };
 
 static const uint8_t HasImmFlag = 0x80;

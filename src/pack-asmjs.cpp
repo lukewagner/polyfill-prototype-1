@@ -800,7 +800,7 @@ public:
 private:
   Enum which_;
   union {
-    Expr mono_;
+    RawExpr mono_;
     PreTypeCode poly_;
     PreTypeSignCode signed_poly_;
   } u;
