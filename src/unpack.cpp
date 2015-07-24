@@ -271,13 +271,14 @@ public:
 
     static const unsigned N = 100;
     char buf[N];
+    uint32_t len;
 
 #if __EMSCRIPTEN__
-    int len = emscripten_print_double(d, buf);
+    len = emscripten_print_double(d, buf);
     assert(len < N-1);
     buf[len] = 0;
 #else
-    uint32_t len = snprintf(buf, N, "%g", d);
+    len = snprintf(buf, N, "%g", d);
 #endif
 
     check_write(len);
@@ -2407,7 +2408,7 @@ asmjs::unpack(const uint8_t* packed, const char* cb_name, uint32_t unpacked_size
 
 #endif
 
-#ifdef EMSCRIPTEN
+#if defined(__EMSCRIPTEN__) && !defined(CHECKED_OUTPUT_SIZE)
 extern "C" {
 
 bool EMSCRIPTEN_KEEPALIVE
