@@ -252,11 +252,11 @@ public:
   {
     name(HotStdLib::FRound);
     ascii('(');
-    float64((double)f);
+    float64((double)f, false); // no need for decimal point when going into fround() call
     ascii(')');
   }
 
-  void float64(double d)
+  void float64(double d, bool needDecimalPoint = true)
   {
     if (std::isnan(d))
         return name(StdLib::NaN);
@@ -287,6 +287,9 @@ public:
     memcpy(cur_, buf, len);
     uint8_t *beg = cur_;
     cur_ += len;
+
+    if (!needDecimalPoint)
+      return;
 
     for (uint8_t* p = beg; p != cur_; ++p) {
       if (*p == '.')
