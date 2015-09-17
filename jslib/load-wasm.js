@@ -12,7 +12,7 @@ var loadWebAssembly = (function() {
       var callbackName = "";
       do {
         callbackName = "onFinishLoadWebAssembly_" + globalNameCounter++;
-      } while (Object.hasOwnProperty(window, callbackName));
+      } while (Object.prototype.hasOwnProperty.call(window, callbackName));
       window[callbackName] = function(asmModule) {
         delete window[callbackName];
         resolve(asmModule);
