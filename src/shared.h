@@ -363,7 +363,7 @@ inline ExprPOD::operator Expr () const {
   result.type_ = type_;
   result.u.raw_ = raw_code_;
   return result;
-};
+}
 
 static const uint8_t HasImmFlag = 0x80;
 static_assert(uint8_t(I32::Bad) <= HasImmFlag, "MSB reserved to distinguish I32 from I32WithImm");
